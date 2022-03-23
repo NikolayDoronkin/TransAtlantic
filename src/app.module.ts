@@ -1,13 +1,14 @@
 import { Module } from '@nestjs/common';
-import {ConfigModule} from '@nestjs/config'
-import {TypeOrmModule} from '@nestjs/typeorm'
+import { ConfigModule } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UserModule } from "./module/user.module";
+import { UserModule } from './module/user.module';
 
 @Module({
-  imports: [UserModule,
-    ConfigModule.forRoot({isGlobal: true}),
+  imports: [
+    UserModule,
+    ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.POSTGRES_HOST,
@@ -17,7 +18,8 @@ import { UserModule } from "./module/user.module";
       database: process.env.POSTGRES_DATABASE,
       autoLoadEntities: true,
       synchronize: true,
-    })],
+    }),
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

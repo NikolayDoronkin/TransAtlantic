@@ -1,14 +1,20 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
-import { User } from "src/domain/user";
-import { CreateUserRequest } from "../domain/request/create-user.request";
-import { UserService } from "../service/user.service";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
+import { User } from 'src/domain/user';
+import { CreateUserRequest } from '../domain/request/create-user.request';
+import { UserService } from '../service/user.service';
 
 //пример того, как будем делать
 @Controller('user')
 export class UserController {
-  constructor(
-    private readonly userService: UserService,
-    ) {}
+  constructor(private readonly userService: UserService) {}
 
   @Get()
   getAll() {
@@ -31,8 +37,10 @@ export class UserController {
   }
 
   @Put()
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   update() {}
 
   @Delete()
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   delete() {}
 }
