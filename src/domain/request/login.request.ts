@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 
-export class CreateUserRequest {
+export class LoginRequest {
   @ApiProperty({description: 'Логин пользователя.', example: 'testLogin'})
   readonly login: string;
 

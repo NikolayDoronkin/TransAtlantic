@@ -4,10 +4,12 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { UserModule } from "./module/user.module";
+import { LoginModule } from "./module/login.module";
 
 @Module({
   imports: [
     UserModule,
+    LoginModule,
 
     ConfigModule.forRoot({ isGlobal: true }),
 
