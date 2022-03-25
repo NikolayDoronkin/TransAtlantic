@@ -11,6 +11,10 @@ export class UserService {
     private readonly userRepository: Repository<User>,
   ) {}
 
+  async getAll() {
+    return await this.userRepository.find();
+  }
+
   getById(id: string): string {
     return id;
   }
