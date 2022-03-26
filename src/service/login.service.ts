@@ -3,7 +3,7 @@ import { UserService } from "./user.service";
 import { JwtService } from "@nestjs/jwt";
 import { AppStatusCode } from "../domain/enum/app-status-code";
 import * as BCrypt from "bcrypt";
-import { User } from "../domain/user";
+import { User } from "../domain/user/user";
 
 @Injectable()
 export class LoginService {
@@ -21,7 +21,7 @@ export class LoginService {
 
   private async validateUser(login: string, password: string) {
     const user = await this.userService.getByLogin(login);
-    let isEqual = await BCrypt.compare(password, user.password);
+    const isEqual = await BCrypt.compare(password, user.password);
 
     if (isEqual) {
       return user;
@@ -37,5 +37,4 @@ export class LoginService {
       token: this.jwtService.sign(payload)
     }
   }
-
 }

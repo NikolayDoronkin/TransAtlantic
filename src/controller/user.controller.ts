@@ -1,30 +1,31 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Put, UseGuards
-} from "@nestjs/common";
-import { User } from 'src/domain/user';
-import { CreateUserRequest } from '../domain/request/create-user.request';
-import { UserService } from '../service/user.service';
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from "@nestjs/common";
+import { User } from "src/domain/user/user";
+import { CreateUserRequest } from "../domain/request/create-user.request";
+import { UserService } from "../service/user.service";
 import { ApiOkResponse, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { JwtAuthGuard } from "../configuration/jwt-auth-guard";
+import { UpdateUserConverter } from "../converter/user/update-user.converter";
+import { CreateUserConverter } from "../converter/user/create-user.converter";
+import { UserConverter } from "../converter/user/user.converter";
 
 //пример того, как будем делать
 
 @Controller('user')
 @ApiTags('user-controller')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+
+    private readonly userConverter: UserConverter,
+    private readonly createUserConverter: CreateUserConverter,
+    private readonly updateUserConverter: UpdateUserConverter,
+  ) {}
 
   @Get('/getAll')
   @UseGuards(JwtAuthGuard)
   @ApiResponse({status: 200, type: [User]})
   @ApiOperation({summary: 'Получения всех пользователей.'})
-  getAll() {
+  async getAll() {
     return this.userService.getAll();
   }
 
@@ -37,15 +38,10 @@ export class UserController {
 
   @Post('/create')
   @UseGuards(JwtAuthGuard)
-  @ApiResponse({status: 201, type: User})
-  @ApiOperation({summary: 'Создания пользователя.'})
-  create(@Body() createUserRequest: CreateUserRequest) {
-    const user = new User();
-
-    user.login = createUserRequest.login;
-    user.password = createUserRequest.password;
-
-    return this.userService.create(user);
+  @ApiResponse({ status: 201, type: User })
+  @ApiOperation({ summary: 'Создания пользователя.' })
+  async create(@Body() request: CreateUserRequest) {
+    return this.userConverter.convert(await this.userService.create(this.createUserConverter.convert(request)));
   }
 
   @Put()
