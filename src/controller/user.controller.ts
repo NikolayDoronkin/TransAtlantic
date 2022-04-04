@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from "@nes
 import { User } from "src/domain/user/user";
 import { CreateUserRequest } from "../domain/request/create-user.request";
 import { UserService } from "../service/user.service";
-import { ApiOkResponse, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiOkResponse, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { JwtAuthGuard } from "../configuration/jwt-auth-guard";
 import { UpdateUserConverter } from "../converter/user/update-user.converter";
 import { CreateUserConverter } from "../converter/user/create-user.converter";
@@ -10,6 +10,7 @@ import { UserConverter } from "../converter/user/user.converter";
 
 //пример того, как будем делать
 
+@ApiBearerAuth('access-token')
 @Controller('user')
 @ApiTags('user-controller')
 export class UserController {
@@ -36,6 +37,7 @@ export class UserController {
     return this.userService.getById(id);
   }
 
+  //TODO: VALIDATION
   @Post('/create')
   @UseGuards(JwtAuthGuard)
   @ApiResponse({ status: 201, type: User })

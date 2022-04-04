@@ -33,5 +33,4 @@ export class JwtAuthGuard implements CanActivate {
       throw new UnauthorizedException(AppStatusCode.UNAUTHORIZED);
     }
   }
-
 }
