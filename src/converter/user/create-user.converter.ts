@@ -1,11 +1,11 @@
 import { CreateUserRequest } from "../../domain/request/create-user.request";
 import { User } from "../../domain/user/user";
 import { Injectable } from "@nestjs/common";
+import { AbstractConverter } from "../abstract.converter";
 
 @Injectable()
-export class CreateUserConverter {
-
-  convert(source: CreateUserRequest): User {
+export class CreateUserConverter extends AbstractConverter<CreateUserRequest, User> {
+  async convert(source: CreateUserRequest): Promise<User> {
     const target = new User();
 
     target.login = source.login;
@@ -13,5 +13,4 @@ export class CreateUserConverter {
 
     return target;
   }
-
 }

@@ -10,9 +10,9 @@ import { UserConverter } from "../converter/user/user.converter";
 
 //пример того, как будем делать
 
-@ApiBearerAuth('access-token')
 @Controller('user')
 @ApiTags('user-controller')
+@ApiBearerAuth('access-token')
 export class UserController {
   constructor(
     private readonly userService: UserService,
@@ -37,24 +37,21 @@ export class UserController {
     return this.userService.getById(id);
   }
 
-  //TODO: VALIDATION
   @Post('/create')
   @UseGuards(JwtAuthGuard)
   @ApiResponse({ status: 201, type: User })
   @ApiOperation({ summary: 'Создания пользователя.' })
   async create(@Body() request: CreateUserRequest) {
-    return this.userConverter.convert(await this.userService.create(this.createUserConverter.convert(request)));
+    return this.userConverter.convert(await this.userService.create(await this.createUserConverter.convert(request)));
   }
 
   @Put()
   @ApiResponse({status: 200, type: User})
   @ApiOperation({summary: 'Обновления пользователя.'})
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   update() {}
 
   @Delete()
   @ApiResponse({status: 200, type: ApiOkResponse})
   @ApiOperation({summary: 'Удаления пользователя по идентификатору.'})
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   delete() {}
 }
