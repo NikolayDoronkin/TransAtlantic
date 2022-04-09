@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  postgres-service:
+    image: postgres
+    command: postgres -c 'max_connections=1000'
+    restart: always
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+      placement:
+        constraints:
+          - node.labels.postgres == true
+    env_file:
+      - env/postgres.env
+    ports:
+      - "5432:5432" #5433 because postgres in local machine use 5432 port
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - postgres-trans-atlantic
+
+volumes:
+  postgres-data:
+
+networks:
+  postgres-trans-atlantic:
