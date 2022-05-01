@@ -2,11 +2,11 @@ import { forwardRef, Module } from "@nestjs/common";
 import { LoginController } from "../controller/login.controller";
 import { LoginService } from "../service/login.service";
 import { JwtModule } from "@nestjs/jwt";
-import { UserModule } from "./user.module";
+import { AppUserModule } from "./app.user.module";
 
 @Module({
   imports: [
-    forwardRef(() => UserModule),
+    forwardRef(() => AppUserModule),
     JwtModule.register({
       secret: process.env.SECRET || "SECRET",
       signOptions: {

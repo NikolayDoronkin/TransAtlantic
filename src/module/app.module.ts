@@ -3,12 +3,12 @@ import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { AppController } from "../controller/app.controller";
 import { AppService } from "../service/app.service";
-import { UserModule } from "./user.module";
+import { AppUserModule } from "./app.user.module";
 import { LoginModule } from "./login.module";
 
 @Module({
   imports: [
-    UserModule,
+    AppUserModule,
     LoginModule,
 
     ConfigModule.forRoot({ isGlobal: true }),
@@ -23,7 +23,7 @@ import { LoginModule } from "./login.module";
       migrations: ['/resources/liquibase/db.changelog.xml'],
       migrationsRun: false,
       autoLoadEntities: true,
-      synchronize: true,
+      synchronize: false,
     }),
   ],
   controllers: [AppController],

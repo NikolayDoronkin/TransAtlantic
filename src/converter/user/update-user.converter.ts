@@ -1,12 +1,12 @@
-import { User } from "../../domain/user/user";
+import { AppUser } from "../../domain/user/app.user";
 import { UpdateUserRequest } from "../../domain/request/update-user.request";
 import { Injectable } from "@nestjs/common";
 
 @Injectable()
 export class UpdateUserConverter {
 
-  convert(source: UpdateUserRequest): User {
-    const target = new User();
+  convert(source: UpdateUserRequest): AppUser {
+    const target = new AppUser();
 
     target.id = source.id;
     target.login = source.login;

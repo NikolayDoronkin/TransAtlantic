@@ -13,7 +13,7 @@ export class LoginController {
 
   @Post("/sign-in")
   login(@Body() loginRequest: LoginRequest) {
-    return this.loginService.login(loginRequest.login, loginRequest.password);
+    return this.loginService.login(loginRequest.email, loginRequest.password);
   }
 
 }

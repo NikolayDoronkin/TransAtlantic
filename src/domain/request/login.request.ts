@@ -1,8 +1,9 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { IsEmail } from "class-validator";
 
 export class LoginRequest {
-  @ApiProperty({description: 'Логин пользователя.', example: 'testLogin'})
-  readonly login: string;
+  @ApiProperty({description: 'Почта пользователя.', example: 'testEmail'})
+  readonly email: string;
 
   @ApiProperty({description: 'Пароль пользователя.', example: 'testPassword'})
   readonly password: string;
