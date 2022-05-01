@@ -9,7 +9,7 @@ export class UpdateUserConverter {
     const target = new AppUser();
 
     target.id = source.id;
-    target.login = source.login;
+    target.email = source.login;
     target.password = source.password;
 
     return target;

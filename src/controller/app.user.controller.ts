@@ -9,8 +9,8 @@ import { CreateUserConverter } from "../converter/user/create-user.converter";
 import { UserConverter } from "../converter/user/user.converter";
 
 @Controller("user")
-@ApiTags("user-controller")
-@ApiBearerAuth("access-token")
+@ApiTags("app-user-controller")
+//@ApiBearerAuth("access-token")
 export class AppUserController {
 	constructor(
 		private readonly userService: AppUserService,

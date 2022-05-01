@@ -8,7 +8,7 @@ export class CreateUserConverter extends AbstractConverter<CreateUserRequest, Ap
   async convert(source: CreateUserRequest): Promise<AppUser> {
     const target = new AppUser();
 
-    target.login = source.login;
+    target.email = source.login;
     target.password = source.password;
 
     return target;

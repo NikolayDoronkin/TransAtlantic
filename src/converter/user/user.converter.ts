@@ -9,7 +9,7 @@ export class UserConverter extends AbstractConverter<AppUser, UserDto>{
     const target = new UserDto();
 
     target.id = source.id;
-    target.login = source.login;
+    target.email = source.email;
 
     return target;
   }
