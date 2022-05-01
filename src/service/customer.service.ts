@@ -12,7 +12,7 @@ export class CustomerService {
 	}
 
 	async findAll(): Promise<Customer[]> {
-		return await this.customerRepository.find();
+		return await this.customerRepository.find({relations : ["status"]});
 	}
 
 	getById(id: string): string {
