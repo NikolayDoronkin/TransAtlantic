@@ -5,12 +5,13 @@ import { AppController } from "../controller/app.controller";
 import { AppService } from "../service/app.service";
 import { AppUserModule } from "./app.user.module";
 import { LoginModule } from "./login.module";
+import {CustomerModule} from "./customer.module";
 
 @Module({
   imports: [
     AppUserModule,
     LoginModule,
-
+    CustomerModule,
     ConfigModule.forRoot({ isGlobal: true }),
 
     TypeOrmModule.forRoot({
