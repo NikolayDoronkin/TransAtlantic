@@ -1,5 +1,5 @@
 import { AppUser } from "../../domain/model/user/app.user";
-import { UpdateUserRequest } from "../../domain/request/update-user.request";
+import { UpdateUserRequest } from "../../domain/request/user/update-user.request";
 import { Injectable } from "@nestjs/common";
 import { AbstractConverter } from "../abstract.converter";
 

@@ -1,4 +1,4 @@
-import { CreateUserRequest } from "../../domain/request/create-user.request";
+import { CreateUserRequest } from "../../domain/request/user/create-user.request";
 import { AppUser } from "../../domain/model/user/app.user";
 import { Injectable } from "@nestjs/common";
 import { AbstractConverter } from "../abstract.converter";

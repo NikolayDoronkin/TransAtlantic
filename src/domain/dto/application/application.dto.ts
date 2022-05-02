@@ -1,6 +1,6 @@
-import { WarehouseDto } from "./warehouse.dto";
-import { RetailerWarehouseDto } from "./retailer-warehouse.dto";
-import { UserDto } from "./user.dto";
+import { WarehouseDto } from "../warehouse.dto";
+import { RetailerWarehouseDto } from "../retailer-warehouse.dto";
+import { UserDto } from "../user.dto";
 import { ApplicationStatusDto } from "./application-status.dto";
 
 export class ApplicationDto {

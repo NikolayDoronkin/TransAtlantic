@@ -26,4 +26,7 @@ export class Item {
 	@ManyToOne(() => Customer, customer => customer.items)
 	@JoinColumn({ name: "customer_id" })
 	customer: Customer;
+
+	@Column({ name: "customer_id" })
+	customerId: number;
 }

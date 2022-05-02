@@ -14,7 +14,7 @@ export class ApplicationService {
 	) {
 	}
 
-	async getById(id: number): Promise<Application[]> {
+	async getByCustomerId(id: number): Promise<Application[]> {
 		const warehouseIds = Array.from(await this.warehouseService.getByCustomerId(id))
 			.map(warehouse => warehouse.id);
 
