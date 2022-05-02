@@ -9,12 +9,12 @@ import { CreateUserConverter } from "../converter/user/create-user.converter";
 import { UpdateUserConverter } from "../converter/user/update-user.converter";
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([AppUser]),
-    forwardRef(() => LoginModule)],
-  controllers: [AppUserController],
-  providers: [AppUserService, UserConverter, CreateUserConverter, UpdateUserConverter],
-  exports: [AppUserService]
+	imports: [
+		TypeOrmModule.forFeature([AppUser]),
+		forwardRef(() => LoginModule)],
+	controllers: [AppUserController],
+	providers: [AppUserService, UserConverter, CreateUserConverter, UpdateUserConverter],
+	exports: [AppUserService]
 })
 export class AppUserModule {
 }
