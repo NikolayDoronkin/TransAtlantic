@@ -1,8 +1,8 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Customer } from "./customer";
+import { Application } from "./application";
 
-@Entity("customer_status")
-export class CustomerStatus {
+@Entity("application_status")
+export class ApplicationStatus {
 	@PrimaryGeneratedColumn()
 	id: number;
 
@@ -12,6 +12,6 @@ export class CustomerStatus {
 	@Column({ name: "description" })
 	description: string;
 
-	@OneToMany(() => Customer, customer => customer.status)
-	customers: Customer[];
+	@OneToMany(() => Application, application => application.status)
+	applications: Application[];
 }
