@@ -6,12 +6,27 @@ import { AppService } from "../service/app.service";
 import { AppUserModule } from "./app.user.module";
 import { LoginModule } from "./login.module";
 import { CustomerModule } from "./customer.module";
+import { ItemModule } from "./item.module";
+import { WarehouseModule } from "./warehouse.module";
+import { RetailerModule } from "./retailer.module";
+import { UserModule } from "./user.module";
+import { WaybillModule } from "./waybill.module";
+import { WriteOffModule } from "./write.off.module";
+import { ApplicationModule } from "./application.module";
 
 @Module({
 	imports: [
 		AppUserModule,
+		ApplicationModule,
 		LoginModule,
 		CustomerModule,
+		ItemModule,
+		RetailerModule,
+		UserModule,
+		WarehouseModule,
+		WaybillModule,
+		WriteOffModule,
+		LoginModule,
 		ConfigModule.forRoot({ isGlobal: true }),
 
 		TypeOrmModule.forRoot({

@@ -1,6 +1,11 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { CustomerStatus } from "./customer.status";
 import { AppUser } from "../user/app.user";
+import { Car } from "../car/car";
+import { Retailer } from "../retailer/retailer";
+import { Warehouse } from "../warehouse/warehouse";
+import { ItemCategory } from "../item/item.category";
+import { Item } from "../item/item";
 
 @Entity("customer")
 export class Customer {
@@ -22,4 +27,19 @@ export class Customer {
 
 	@OneToMany(() => AppUser, appUser => appUser.customer)
 	users: AppUser[];
+
+	@OneToMany(() => Car, car => car.customer)
+	cars: Car[];
+
+	@OneToMany(() => Retailer, retailer => retailer.customer)
+	retailers: Retailer[];
+
+	@OneToMany(() => Warehouse, warehouse => warehouse.customer)
+	warehouses: Warehouse[];
+
+	@OneToMany(() => ItemCategory, category => category.customer)
+	categories: ItemCategory[];
+
+	@ManyToOne(() => Item, item => item.customer)
+	items: Item[];
 }
