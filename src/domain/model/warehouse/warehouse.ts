@@ -23,7 +23,10 @@ export class Warehouse {
 	@JoinColumn({ name: "customer_id" })
 	customer: Customer;
 
-	@OneToMany(() => Application, application => application.src_warehouse)
+	@Column({name: "customer_id"})
+	customerId: number;
+
+	@OneToMany(() => Application, application => application.srcWarehouse)
 	applications: Application[];
 
 	@OneToMany(() => WarehouseItem, item => item.warehouse)

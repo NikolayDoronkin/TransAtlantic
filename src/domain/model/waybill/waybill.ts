@@ -1,8 +1,8 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Car } from "../car/car";
-import { User } from "../user/user";
 import { WaybillStatus } from "./waybill.status";
 import { Application } from "../application/application";
+import { AppUser } from "../user/app.user";
 
 @Entity("waybill")
 export class Waybill {
@@ -16,20 +16,20 @@ export class Waybill {
 	@JoinColumn({ name: "car_id" })
 	car: Car;
 
-	@ManyToOne(() => User)
+	@ManyToOne(() => AppUser)
 	@JoinColumn({ name: "driver_id" })
-	driver: User;
+	driver: AppUser;
 
-	@ManyToOne(() => User)
+	@ManyToOne(() => AppUser)
 	@JoinColumn({ name: "creator_id" })
-	creator: User;
+	creator: AppUser;
 
 	@Column({ type: "timestamptz", name: "create_time" })
 	createTime: Date;
 
-	@ManyToOne(() => User)
+	@ManyToOne(() => AppUser)
 	@JoinColumn({ name: "last_editor_id" })
-	lastEditor: User;
+	lastEditor: AppUser;
 
 	@Column({ type: "timestamptz", name: "last_edit_time" })
 	lastEditTime: Date;

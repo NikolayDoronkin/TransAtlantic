@@ -14,10 +14,12 @@ import { AddressCity } from "../domain/model/address/address.city";
 import { AddressState } from "../domain/model/address/address.state";
 import { CustomerStatus } from "../domain/model/customer/customer.status";
 import { Customer } from "../domain/model/customer/customer";
+import { RolePermission } from "../domain/model/user/role.permission";
+import { UserPermission } from "../domain/model/user/user.permission";
 
 @Module({
 	imports: [
-		TypeOrmModule.forFeature([AppUser, UserRole, UserStatus,
+		TypeOrmModule.forFeature([AppUser, UserRole, UserStatus, RolePermission, UserPermission,
 			Address, AddressCity, AddressState,
 			Customer, CustomerStatus]),
 		forwardRef(() => LoginModule)],

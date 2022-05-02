@@ -1,37 +1,40 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Warehouse } from "../warehouse/warehouse";
 import { RetailerWarehouse } from "../retailer/retailer.warehouse";
-import { User } from "../user/user";
 import { ApplicationStatus } from "./application.status";
 import { Waybill } from "../waybill/waybill";
 import { ApplicationItem } from "./application.item";
+import { AppUser } from "../user/app.user";
 
 @Entity("application")
 export class Application {
 	@PrimaryGeneratedColumn()
 	id: number;
 
-	@Column({ name: "a_name" })
+	@Column({ name: "a_number" })
 	number: number;
 
 	@ManyToOne(() => Warehouse, warehouse => warehouse.applications)
 	@JoinColumn({ name: "src_warehouse_id" })
-	src_warehouse: Warehouse;
+	srcWarehouse: Warehouse;
+
+	@Column({name: "src_warehouse_id" })
+	srcWarehouseId: number;
 
 	@ManyToOne(() => RetailerWarehouse, warehouse => warehouse.applications)
 	@JoinColumn({ name: "dest_warehouse_id" })
-	dest_warehouse: RetailerWarehouse;
+	destWarehouse: RetailerWarehouse;
 
-	@ManyToOne(() => User)
+	@ManyToOne(() => AppUser)
 	@JoinColumn({ name: "creator_id" })
-	creator: User;
+	creator: AppUser;
 
 	@Column({ type: "date", name: "create_time" })
 	createTime: string;
 
-	@ManyToOne(() => User)
+	@ManyToOne(() => AppUser)
 	@JoinColumn({ name: "last_editor_id" })
-	last_editor: User;
+	lastEditor: AppUser;
 
 	@Column({ type: "date", name: "last_edit_time" })
 	lastEditTime: string;

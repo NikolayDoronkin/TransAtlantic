@@ -9,7 +9,6 @@ import { CustomerModule } from "./customer.module";
 import { ItemModule } from "./item.module";
 import { WarehouseModule } from "./warehouse.module";
 import { RetailerModule } from "./retailer.module";
-import { UserModule } from "./user.module";
 import { WaybillModule } from "./waybill.module";
 import { WriteOffModule } from "./write.off.module";
 import { ApplicationModule } from "./application.module";
@@ -22,7 +21,6 @@ import { ApplicationModule } from "./application.module";
 		CustomerModule,
 		ItemModule,
 		RetailerModule,
-		UserModule,
 		WarehouseModule,
 		WaybillModule,
 		WriteOffModule,
@@ -39,7 +37,8 @@ import { ApplicationModule } from "./application.module";
 			migrations: ["/resources/liquibase/db.changelog.xml"],
 			migrationsRun: false,
 			autoLoadEntities: true,
-			synchronize: false
+			synchronize: false,
+			logging: true
 		})
 	],
 	controllers: [AppController],

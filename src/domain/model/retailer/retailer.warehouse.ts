@@ -19,6 +19,6 @@ export class RetailerWarehouse {
 	@JoinColumn({ name: "retailer_id" })
 	retailer: Retailer;
 
-	@OneToMany(() => Application, application => application.dest_warehouse)
+	@OneToMany(() => Application, application => application.destWarehouse)
 	applications: Application[];
 }

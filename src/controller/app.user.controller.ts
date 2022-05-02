@@ -33,8 +33,8 @@ export class AppUserController {
 	@Get("/getById/:id")
 	@ApiResponse({ status: 200, type: AppUser })
 	@ApiOperation({ summary: "Получения пользователя по идентификатору." })
-	getById(@Param("id") id: number): Promise<UserDto> {
-		return this.userConverter.convert(this.userService.getById(id));
+	async getById(@Param("id") id: number): Promise<UserDto> {
+		return this.userConverter.convert(await this.userService.getById(id));
 	}
 
 	@Post("/create")
@@ -42,14 +42,14 @@ export class AppUserController {
 	@ApiResponse({ status: 201, type: AppUser })
 	@ApiOperation({ summary: "Создания пользователя." })
 	async create(@Body() request: CreateUserRequest): Promise<UserDto> {
-		return this.userConverter.convert(this.userService.create(await this.createUserConverter.convert(request)));
+		return this.userConverter.convert(await this.userService.create(await this.createUserConverter.convert(request)));
 	}
 
 	@Put()
 	@ApiResponse({ status: 200, type: AppUser })
 	@ApiOperation({ summary: "Обновления пользователя." })
 	async update(@Body() request: UpdateUserRequest): Promise<UserDto> {
-		return this.userConverter.convert(this.userService.update(await this.updateUserConverter.convert(request)));
+		return this.userConverter.convert(await this.userService.update(await this.updateUserConverter.convert(request)));
 	}
 
 	@Delete()
