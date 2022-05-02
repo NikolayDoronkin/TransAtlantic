@@ -1,18 +1,18 @@
-import { AppUser } from "../../domain/user/app.user";
+import { AppUser } from "../../domain/model/user/app.user";
 import { UpdateUserRequest } from "../../domain/request/update-user.request";
 import { Injectable } from "@nestjs/common";
+import { AbstractConverter } from "../abstract.converter";
 
 @Injectable()
-export class UpdateUserConverter {
+export class UpdateUserConverter extends AbstractConverter<UpdateUserRequest, AppUser> {
+	convert(source: UpdateUserRequest): AppUser {
+		const target = new AppUser();
 
-  convert(source: UpdateUserRequest): AppUser {
-    const target = new AppUser();
+		target.id = source.id;
+		target.firstName = source.firstName;
+		target.lastName = source.lastName;
+		target.birthday = source.birthday;
 
-    target.id = source.id;
-    target.email = source.login;
-    target.password = source.password;
-
-    return target;
-  }
-
+		return target;
+	}
 }

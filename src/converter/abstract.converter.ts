@@ -1,8 +1,8 @@
-export abstract class AbstractConverter<T, S> {
+export abstract class AbstractConverter<S, T> {
 
-  abstract convert(source: T): Promise<S>;
+	abstract convert(source: S): T;
 
-  convertArray(sources: T []): Promise<S>[] {
-    return Array.from(sources).map(element => this.convert(element));
-  }
+	convertArray(sources: S []): T[] {
+		return Array.from(sources).map(element => this.convert(element));
+	}
 }

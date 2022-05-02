@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from "@nestjs/common";
-import { AppUser } from "src/domain/user/app.user";
+import { AppUser } from "src/domain/model/user/app.user";
 import { CreateUserRequest } from "../domain/request/create-user.request";
 import { AppUserService } from "../service/app.user.service";
 import { ApiBearerAuth, ApiOkResponse, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
@@ -7,6 +7,8 @@ import { JwtAuthGuard } from "../configuration/jwt-auth-guard";
 import { UpdateUserConverter } from "../converter/user/update-user.converter";
 import { CreateUserConverter } from "../converter/user/create-user.converter";
 import { UserConverter } from "../converter/user/user.converter";
+import { UserDto } from "../domain/dto/user.dto";
+import { UpdateUserRequest } from "../domain/request/update-user.request";
 
 @Controller("user")
 @ApiTags("app-user-controller")
@@ -31,22 +33,23 @@ export class AppUserController {
 	@Get("/getById/:id")
 	@ApiResponse({ status: 200, type: AppUser })
 	@ApiOperation({ summary: "Получения пользователя по идентификатору." })
-	getById(@Param("id") id: string): string {
-		return this.userService.getById(id);
+	getById(@Param("id") id: number): Promise<UserDto> {
+		return this.userConverter.convert(this.userService.getById(id));
 	}
 
 	@Post("/create")
 	//@UseGuards(JwtAuthGuard)
 	@ApiResponse({ status: 201, type: AppUser })
 	@ApiOperation({ summary: "Создания пользователя." })
-	async create(@Body() request: CreateUserRequest) {
-		return this.userConverter.convert(await this.userService.create(await this.createUserConverter.convert(request)));
+	async create(@Body() request: CreateUserRequest): Promise<UserDto> {
+		return this.userConverter.convert(this.userService.create(await this.createUserConverter.convert(request)));
 	}
 
 	@Put()
 	@ApiResponse({ status: 200, type: AppUser })
 	@ApiOperation({ summary: "Обновления пользователя." })
-	update() {
+	async update(@Body() request: UpdateUserRequest): Promise<UserDto> {
+		return this.userConverter.convert(this.userService.update(await this.updateUserConverter.convert(request)));
 	}
 
 	@Delete()
