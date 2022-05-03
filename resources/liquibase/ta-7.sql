@@ -1,0 +1,2 @@
+ALTER TABLE app_user ALTER COLUMN address_id DROP NOT NULL;
+ALTER TABLE app_user ALTER COLUMN birthday DROP NOT NULL;

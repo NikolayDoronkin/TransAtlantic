@@ -1,5 +1,5 @@
 import { AppUser } from "../../domain/model/user/app.user";
-import { UserDto } from "../../domain/dto/user.dto";
+import { UserDto } from "../../domain/response/user.dto";
 import { Injectable } from "@nestjs/common";
 import { AbstractConverter } from "../abstract.converter";
 

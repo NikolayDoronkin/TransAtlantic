@@ -39,8 +39,9 @@ import { ApplicationModule } from "./application.module";
 			migrations: ["/resources/liquibase/db.changelog.xml"],
 			migrationsRun: false,
 			autoLoadEntities: true,
-			synchronize: false
-		})
+			synchronize: false,
+			logging: true
+		}),
 	],
 	controllers: [AppController],
 	providers: [AppService]

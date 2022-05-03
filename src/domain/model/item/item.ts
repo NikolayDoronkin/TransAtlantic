@@ -23,7 +23,7 @@ export class Item {
 	@Column({ name: "unit_size" })
 	unitSize: number;
 
-	@ManyToOne(() => Customer, customer => customer.items)
+	/*@ManyToOne(() => Customer, customer => customer.items)
 	@JoinColumn({ name: "customer_id" })
-	customer: Customer;
+	customer: Customer;*/
 }
