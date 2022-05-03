@@ -17,13 +17,13 @@ export class Warehouse {
 	address: Address;
 
 	@Column({ name: "total_capacity" })
-	totalCapacity: string;
+	totalCapacity: number;
 
 	@ManyToOne(() => Customer, customer => customer.warehouses)
 	@JoinColumn({ name: "customer_id" })
 	customer: Customer;
 
-	@Column({name: "customer_id"})
+	@Column({ name: "customer_id" })
 	customerId: number;
 
 	@OneToMany(() => Application, application => application.srcWarehouse)

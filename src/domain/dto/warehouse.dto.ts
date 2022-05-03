@@ -3,5 +3,5 @@ export class WarehouseDto {
 
 	address: string;
 
-	totalCapacity: string;
+	totalCapacity: number;
 }
