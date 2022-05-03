@@ -1,20 +1,53 @@
-import {Controller, Get} from "@nestjs/common";
-import {ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
-import {Customer} from "../domain/model/customer/customer";
+import {Body, Controller, Get, Post} from "@nestjs/common";
+import {ApiOkResponse, ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
 import {CustomerService} from "../service/customer.service";
+import {CreateCustomerRequest} from "../domain/request/create-customer.request";
+import {CreateCustomerResponse} from "../domain/response/create-customer.response";
+import {CreateCustomerUserConverter} from "../converter/customer/create-customer.converter";
+import {CreateCustomerConverter} from "../converter/customer/create-customer-user.converter";
+import {CreateCustomerResponseConverter} from "../converter/customer/create-customer.response.converter";
+import {CustomerDto} from "../domain/response/customer.dto";
+import {CustomerResponseConverter} from "../converter/customer/customer.response.converter";
 
 @Controller('customer')
 @ApiTags('customer-controller')
 export class CustomerController {
 	constructor(
-		private readonly customerService: CustomerService
+		private readonly customerService: CustomerService,
+		private readonly createCustomerConverter: CreateCustomerConverter,
+		private readonly createUserConverter: CreateCustomerUserConverter,
+		private readonly createCustomerResponseConverter: CreateCustomerResponseConverter,
+		private readonly customerResponseConverter: CustomerResponseConverter
 	) {
 	}
 
-	@Get('/findAll')
-	@ApiResponse({status: 200, type: [Customer]})
-	@ApiOperation({summary: 'Получение всех клиентов.'})
-	async getAll(): Promise<Customer[]> {
-		return this.customerService.findAll();
+	// @Get('/findAll')
+	// @ApiResponse({status: 200, type: [CustomerDto]})
+	// @ApiOperation({summary: 'Получение всех клиентов.'})
+	// async getAll(): Promise<CustomerDto[]> {
+	// 	return this.customerResponseConverter.convertArray(this.customerService.findAll());
+	// }
+
+	@Post('/disable')
+	@ApiResponse({status: 200, type: [ApiOkResponse]} )
+	@ApiOperation({summary: 'Блокировка клиентов.'})
+	async disableCustomers(@Body() customerIds: number[]) {
+		return this.customerService.disableCustomers(customerIds);
+	}
+
+	@Post('/enable')
+	@ApiResponse({status: 200, type: [ApiOkResponse]})
+	@ApiOperation({summary: 'Разблокировка клиентов.'})
+	async enableCustomers(@Body() customerIds: number[]) {
+		return this.customerService.enableCustomers(customerIds);
+	}
+
+	@Post("/create")
+	@ApiResponse({ status: 201, type: CreateCustomerResponse })
+	@ApiOperation({ summary: "Создание клиента и пользователя." })
+	async create(@Body() request: CreateCustomerRequest): Promise<CreateCustomerResponse> {
+		return this.createCustomerResponseConverter.convert(this.customerService.create(
+			await this.createCustomerConverter.convert(request),
+			await this.createUserConverter.convert(request)));
 	}
 }
