@@ -7,7 +7,7 @@ import { JwtAuthGuard } from "../configuration/jwt-auth-guard";
 import { UpdateUserConverter } from "../converter/user/update-user.converter";
 import { CreateUserConverter } from "../converter/user/create-user.converter";
 import { UserConverter } from "../converter/user/user.converter";
-import { UserDto } from "../domain/dto/user.dto";
+import { UserDto } from "../domain/response/user.dto";
 import { UpdateUserRequest } from "../domain/request/user/update-user.request";
 
 @Controller("user")

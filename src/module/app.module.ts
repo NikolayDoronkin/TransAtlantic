@@ -39,7 +39,7 @@ import { ApplicationModule } from "./application.module";
 			autoLoadEntities: true,
 			synchronize: false,
 			logging: true
-		})
+		}),
 	],
 	controllers: [AppController],
 	providers: [AppService]

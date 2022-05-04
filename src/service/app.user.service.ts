@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { AppUser } from "src/domain/model/user/app.user";
-import { EntityNotFoundError, Repository } from "typeorm";
+import {EntityNotFoundError, In, Repository} from "typeorm";
 import * as BCrypt from "bcrypt";
 
 @Injectable()
@@ -21,6 +21,14 @@ export class AppUserService {
 		return await this.appUserRepository.findOne(
 			{
 				where: { id },
+				relations: ["role", "customer", "status", "address"]
+			});
+	}
+
+	async getByCustomerIds(customerIds: number[]): Promise<AppUser[]> {
+		return await this.appUserRepository.find(
+			{
+				where : {customerId: In(customerIds)},
 				relations: ["role", "customer", "status", "address"]
 			});
 	}
@@ -45,6 +53,17 @@ export class AppUserService {
 		const updateUser = this.buildUser(updatedUser, await currentUser);
 
 		return this.appUserRepository.save(updateUser);
+	}
+
+	async updateAll(updatedUsers: AppUser[]): Promise<AppUser[]> {
+		updatedUsers.forEach(updatedUser => {
+			this.getById(updatedUser.id).then(appUser => {
+				if (appUser == null) {
+					throw new EntityNotFoundError(AppUser, updatedUser.id);
+				}
+			});
+		});
+		return this.appUserRepository.save(updatedUsers);
 	}
 
 	async getByEmail(email: string) {

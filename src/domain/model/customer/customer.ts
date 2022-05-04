@@ -5,11 +5,11 @@ import { Car } from "../car/car";
 import { Retailer } from "../retailer/retailer";
 import { Warehouse } from "../warehouse/warehouse";
 import { ItemCategory } from "../item/item.category";
-import { Item } from "../item/item";
+import {Item} from "../item/item";
 
 @Entity("customer")
 export class Customer {
-	@PrimaryGeneratedColumn()
+	@PrimaryGeneratedColumn({type: 'bigint'})
 	id: number;
 
 	@Column({ name: "c_name" })
