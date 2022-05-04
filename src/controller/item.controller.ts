@@ -23,6 +23,13 @@ export class ItemController {
 		return this.itemConverter.convertArray(await this.itemService.getByCustomerId(id));
 	}
 
+	@Get("/count/:id")
+	@ApiResponse({ status: 200, type: [ItemResponse] })
+	@ApiOperation({ summary: "Получение продукта." })
+	async getCountByCustomerId(@Param("id") id: number): Promise<number> {
+		return await this.itemService.getCountByCustomerId(id);
+	}
+
 	@Post("/create")
 	@ApiResponse({ status: 2011, type: [ItemResponse] })
 	@ApiOperation({ summary: "Создание продукта." })

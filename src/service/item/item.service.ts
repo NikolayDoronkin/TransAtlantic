@@ -13,7 +13,6 @@ export class ItemService {
 	constructor(
 		@InjectRepository(Item)
 		private readonly itemRepository: Repository<Item>,
-
 		private readonly carService: CarService,
 		private readonly customerService: CustomerService,
 		private readonly warehouseService: WarehouseService,
@@ -27,6 +26,14 @@ export class ItemService {
 			relations: [
 				"category"
 			]
+		});
+	}
+
+	async getCountByCustomerId(customerId: number): Promise<number> {
+		return await this.itemRepository.count({
+			where: {
+				customerId: customerId
+			}
 		});
 	}
 
@@ -81,6 +88,6 @@ export class ItemService {
 			}
 		});
 
-		return  message;
+		return message;
 	}
 }
