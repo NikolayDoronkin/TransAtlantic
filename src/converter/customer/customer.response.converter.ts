@@ -4,15 +4,21 @@ import {Customer} from "../../domain/model/customer/customer";
 import {CustomerDto} from "../../domain/response/customer.dto";
 
 @Injectable()
-export class CustomerResponseConverter extends AbstractConverter<Promise<Customer>, CustomerDto> {
-	// @ts-ignore
-	async convert(source: Promise<Customer>): Promise<CustomerDto> {
+export class CustomerResponseConverter extends AbstractConverter<Customer, CustomerDto> {
+	convert(source: Customer): CustomerDto {
 		const target = new CustomerDto();
 
-		target.id = await source.then(customer => customer.id);
-		target.name = await source.then(customer => customer.name);
-		target.statusName = await source.then(customer => customer.status.name);
-		target.registrationDate = await source.then(customer => customer.registrationDate);
+		/*source.then(source => {
+			target.id = source.id;
+			target.name = source.name;
+			target.statusName = source.status.name;
+			target.registrationDate = source.registrationDate;
+		})*/
+
+		target.id = source.id;
+		target.name = source.name;
+		target.statusName = source.status.name;
+		target.registrationDate = source.registrationDate;
 
 		return target;
 	}

@@ -1,13 +1,13 @@
-import {Injectable} from "@nestjs/common";
-import {InjectRepository} from "@nestjs/typeorm";
-import {In, Repository} from "typeorm";
-import {Customer} from "../domain/model/customer/customer";
-import {AppUser} from "../domain/model/user/app.user";
-import {RoleService} from "./role.service";
-import {CustomerStatusService} from "./customer.status.service";
-import {AppUserService} from "./app.user.service";
-import {UserStatusService} from "./user.status.service";
-import {MailService} from "./mail.service";
+import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { In, Repository } from "typeorm";
+import { Customer } from "../domain/model/customer/customer";
+import { AppUser } from "../domain/model/user/app.user";
+import { RoleService } from "./role.service";
+import { CustomerStatusService } from "./customer.status.service";
+import { AppUserService } from "./app.user.service";
+import { UserStatusService } from "./user.status.service";
+import { MailService } from "./mail.service";
 import crypto from "crypto";
 
 @Injectable()
@@ -29,8 +29,8 @@ export class CustomerService {
 	) {
 	}
 
-	async findAll(): Promise<Customer[]> {
-		return await this.customerRepository.find({relations : ["status"]});
+	async getAll(): Promise<Customer[]> {
+		return await this.customerRepository.find({ relations: ["status"] });
 	}
 
 	async getById(id: number): Promise<Customer> {
@@ -38,9 +38,10 @@ export class CustomerService {
 			where: {
 				id: id
 			}
-		})
+		});
 	}
-	async create(customer: Customer, user: AppUser) : Promise<AppUser> {
+
+	async create(customer: Customer, user: AppUser): Promise<AppUser> {
 		const customerStatus = await this.customerStatusService.findByName(this.ACTIVE_STATUS);
 		customer.status = customerStatus;
 		customer.statusId = customerStatus.id;
@@ -71,7 +72,7 @@ export class CustomerService {
 	}
 
 	private async changeStatus(customerIds: number[], status: string) {
-		const customers = await this.customerRepository.find({relations : ["status"], where : {id: In(customerIds)}});
+		const customers = await this.customerRepository.find({ relations: ["status"], where: { id: In(customerIds) } });
 		const customerStatus = await this.customerStatusService.findByName(status);
 		customers.forEach(customer => customer.status = customerStatus);
 		await this.customerRepository.save(customers);
@@ -83,10 +84,10 @@ export class CustomerService {
 	}
 
 	private buildMessage(password: string): string {
-		return "Ваш пароль для входа в систему: " + password + "\nНикому не сообщайте"
+		return "Ваш пароль для входа в систему: " + password + "\nНикому не сообщайте";
 	}
 
 	private generatePassword(): string {
-		return crypto.randomBytes(4).toString('hex');
+		return crypto.randomBytes(4).toString("hex");
 	}
 }

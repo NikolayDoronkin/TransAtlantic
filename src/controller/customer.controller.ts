@@ -14,19 +14,22 @@ import {CustomerResponseConverter} from "../converter/customer/customer.response
 export class CustomerController {
 	constructor(
 		private readonly customerService: CustomerService,
-		private readonly createCustomerConverter: CreateCustomerConverter,
+
 		private readonly createUserConverter: CreateCustomerUserConverter,
-		private readonly createCustomerResponseConverter: CreateCustomerResponseConverter,
-		private readonly customerResponseConverter: CustomerResponseConverter
+		private readonly createCustomerConverter: CreateCustomerConverter,
+		private readonly customerResponseConverter: CustomerResponseConverter,
+		private readonly createCustomerResponseConverter: CreateCustomerResponseConverter
 	) {
 	}
 
-	// @Get('/findAll')
-	// @ApiResponse({status: 200, type: [CustomerDto]})
-	// @ApiOperation({summary: 'Получение всех клиентов.'})
-	// async getAll(): Promise<CustomerDto[]> {
-	// 	return this.customerResponseConverter.convertArray(this.customerService.findAll());
-	// }
+	@Get('/getAll')
+	@ApiResponse({status: 200, type: [CustomerDto]})
+	@ApiOperation({summary: 'Получение всех клиентов.'})
+	async getAll(): Promise<CustomerDto[]> {
+		return this.customerService.getAll().then(customers => {
+			return this.customerResponseConverter.convertArray(customers);
+		});
+	}
 
 	@Post('/disable')
 	@ApiResponse({status: 200, type: [ApiOkResponse]} )
