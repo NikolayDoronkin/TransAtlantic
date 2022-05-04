@@ -40,6 +40,6 @@ export class Customer {
 	@OneToMany(() => ItemCategory, category => category.customer)
 	categories: ItemCategory[];
 
-	@ManyToOne(() => Item, item => item.customer)
+	@OneToMany(() => Item, item => item.customer)
 	items: Item[];
 }

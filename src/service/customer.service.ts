@@ -15,8 +15,12 @@ export class CustomerService {
 		return await this.customerRepository.find({relations : ["status"]});
 	}
 
-	getById(id: string): string {
-		return id;
+	async getById(id: number): Promise<Customer> {
+		return await this.customerRepository.findOne({
+			where: {
+				id: id
+			}
+		})
 	}
 
 	async create(customer: Customer) {

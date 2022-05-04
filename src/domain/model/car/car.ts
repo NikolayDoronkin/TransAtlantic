@@ -20,4 +20,7 @@ export class Car {
 	@ManyToOne(() => Customer, customer => customer.cars)
 	@JoinColumn({ name: "customer_id" })
 	customer: Customer;
+
+	@Column({ name: "customer_id" })
+	customerId: number;
 }
