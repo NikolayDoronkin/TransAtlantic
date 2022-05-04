@@ -6,7 +6,7 @@ import {CreateCustomerResponse} from "../domain/response/create-customer.respons
 import {CreateCustomerUserConverter} from "../converter/customer/create-customer.converter";
 import {CreateCustomerConverter} from "../converter/customer/create-customer-user.converter";
 import {CreateCustomerResponseConverter} from "../converter/customer/create-customer.response.converter";
-import {CustomerDto} from "../domain/response/customer.dto";
+import {CustomerResponse} from "../domain/response/customer.response";
 import {CustomerResponseConverter} from "../converter/customer/customer.response.converter";
 
 @Controller("customer")
@@ -23,9 +23,9 @@ export class CustomerController {
 	}
 
 	@Get('/getAll')
-	@ApiResponse({status: 200, type: [CustomerDto]})
+	@ApiResponse({status: 200, type: [CustomerResponse]})
 	@ApiOperation({summary: 'Получение всех клиентов.'})
-	async getAll(): Promise<CustomerDto[]> {
+	async getAll(): Promise<CustomerResponse[]> {
 		return this.customerService.getAll().then(customers => {
 			return this.customerResponseConverter.convertArray(customers);
 		});

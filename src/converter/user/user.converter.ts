@@ -1,12 +1,12 @@
 import { AppUser } from "../../domain/model/user/app.user";
-import { UserDto } from "../../domain/response/user.dto";
+import { UserResponse } from "../../domain/response/user.response";
 import { Injectable } from "@nestjs/common";
 import { AbstractConverter } from "../abstract.converter";
 
 @Injectable()
-export class UserConverter extends AbstractConverter<AppUser, UserDto> {
-	convert(source: AppUser): UserDto {
-		const target = new UserDto();
+export class UserConverter extends AbstractConverter<AppUser, UserResponse> {
+	convert(source: AppUser): UserResponse {
+		const target = new UserResponse();
 
 		target.id = source.id;
 		target.email = source.email;

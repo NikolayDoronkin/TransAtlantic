@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
 import { ApiOkResponse, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { ItemService } from "../service/item/item.service";
-import { ItemDto } from "../domain/dto/item/item.dto";
+import { ItemResponse } from "../domain/response/item/item.response";
 import { ItemConverter } from "../converter/item/item.converter";
 import { CreateItemRequest } from "../domain/request/item/create-item.request";
 import { CreateItemConverter } from "../converter/item/create-item.converter";
@@ -17,16 +17,16 @@ export class ItemController {
 	}
 
 	@Get("/getByCustomerId/:id")
-	@ApiResponse({ status: 200, type: [ItemDto] })
+	@ApiResponse({ status: 200, type: [ItemResponse] })
 	@ApiOperation({ summary: "Получение продукта." })
-	async getCustomerById(@Param("id") id: number): Promise<ItemDto[]> {
+	async getCustomerById(@Param("id") id: number): Promise<ItemResponse[]> {
 		return this.itemConverter.convertArray(await this.itemService.getByCustomerId(id));
 	}
 
 	@Post("/create")
-	@ApiResponse({ status: 2011, type: [ItemDto] })
+	@ApiResponse({ status: 2011, type: [ItemResponse] })
 	@ApiOperation({ summary: "Создание продукта." })
-	async create(@Body() request: CreateItemRequest): Promise<ItemDto> {
+	async create(@Body() request: CreateItemRequest): Promise<ItemResponse> {
 		return this.itemConverter.convert(await this.itemService.create(this.createItemConverter.convert(request)));
 	}
 

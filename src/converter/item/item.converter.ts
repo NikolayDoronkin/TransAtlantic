@@ -1,12 +1,12 @@
 import { Injectable } from "@nestjs/common";
 import { AbstractConverter } from "../abstract.converter";
 import { Item } from "../../domain/model/item/item";
-import { ItemDto } from "../../domain/dto/item/item.dto";
+import { ItemResponse } from "../../domain/response/item/item.response";
 
 @Injectable()
-export class ItemConverter extends AbstractConverter<Item, ItemDto>{
-	convert(source: Item): ItemDto {
-		const target = new ItemDto();
+export class ItemConverter extends AbstractConverter<Item, ItemResponse>{
+	convert(source: Item): ItemResponse {
+		const target = new ItemResponse();
 
 		target.id = source.id;
 		target.name = source.name;

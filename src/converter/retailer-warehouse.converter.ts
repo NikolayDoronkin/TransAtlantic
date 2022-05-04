@@ -1,10 +1,10 @@
 import { AbstractConverter } from "./abstract.converter";
 import { RetailerWarehouse } from "../domain/model/retailer/retailer.warehouse";
-import { RetailerWarehouseDto } from "../domain/dto/retailer-warehouse.dto";
+import {RetailerWarehouseResponse} from "../domain/response/retailer-warehouse.response";
 
-export class RetailerWarehouseConverter extends AbstractConverter<RetailerWarehouse, RetailerWarehouseDto> {
-	convert(source: RetailerWarehouse): RetailerWarehouseDto {
-		const target = new RetailerWarehouseDto();
+export class RetailerWarehouseConverter extends AbstractConverter<RetailerWarehouse, RetailerWarehouseResponse> {
+	convert(source: RetailerWarehouse): RetailerWarehouseResponse {
+		const target = new RetailerWarehouseResponse();
 
 		target.id = source.id;
 		target.name = source.name;

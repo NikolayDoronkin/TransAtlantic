@@ -2,7 +2,7 @@ import { Body, Controller, Get, Param, Post } from "@nestjs/common";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { ApplicationService } from "../service/application.service";
 import { ApplicationConverter } from "../converter/application/application.converter";
-import { ApplicationDto } from "../domain/dto/application/application.dto";
+import { ApplicationDto } from "../domain/response/application/application.dto";
 
 @Controller("application")
 @ApiTags("application-controller")

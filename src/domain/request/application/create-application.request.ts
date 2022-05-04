@@ -1,4 +1,4 @@
-import { ApplicationStatusDto } from "../../dto/application/application-status.dto";
+import { ApplicationStatusDto } from "../../response/application/application-status.dto";
 
 export class CreateApplicationRequest {
 	number: number;

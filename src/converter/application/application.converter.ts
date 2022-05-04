@@ -1,6 +1,6 @@
 import { AbstractConverter } from "../abstract.converter";
 import { Application } from "../../domain/model/application/application";
-import { ApplicationDto } from "../../domain/dto/application/application.dto";
+import { ApplicationDto } from "../../domain/response/application/application.dto";
 import { Injectable } from "@nestjs/common";
 import { UserConverter } from "../user/user.converter";
 import { WarehouseConverter } from "../warehouse.converter";

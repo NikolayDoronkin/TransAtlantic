@@ -1,4 +1,4 @@
-export class RetailerWarehouseDto {
+export class RetailerWarehouseResponse {
 	id: number;
 	name: string;
 	address: string;

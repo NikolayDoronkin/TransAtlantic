@@ -1,6 +1,6 @@
 import { AbstractConverter } from "../abstract.converter";
 import { ApplicationStatus } from "../../domain/model/application/application.status";
-import { ApplicationStatusDto } from "../../domain/dto/application/application-status.dto";
+import { ApplicationStatusDto } from "../../domain/response/application/application-status.dto";
 import { Injectable } from "@nestjs/common";
 
 @Injectable()

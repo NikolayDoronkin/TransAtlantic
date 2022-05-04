@@ -1,4 +1,4 @@
-export class CustomerDto {
+export class CustomerResponse {
 
 	id: number;
 

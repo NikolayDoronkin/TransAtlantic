@@ -1,4 +1,4 @@
-export class WarehouseDto {
+export class WarehouseResponse {
 	name: string;
 
 	address: string;
