@@ -18,14 +18,14 @@ export class ItemController {
 
 	@Get("/getByCustomerId/:id")
 	@ApiResponse({ status: 200, type: [ItemResponse] })
-	@ApiOperation({ summary: "Получение продукта." })
+	@ApiOperation({ summary: "Получение продуктов." })
 	async getCustomerById(@Param("id") id: number): Promise<ItemResponse[]> {
 		return this.itemConverter.convertArray(await this.itemService.getByCustomerId(id));
 	}
 
 	@Get("/count/:id")
 	@ApiResponse({ status: 200, type: [ItemResponse] })
-	@ApiOperation({ summary: "Получение продукта." })
+	@ApiOperation({ summary: "Получение количества продукта." })
 	async getCountByCustomerId(@Param("id") id: number): Promise<number> {
 		return await this.itemService.getCountByCustomerId(id);
 	}
