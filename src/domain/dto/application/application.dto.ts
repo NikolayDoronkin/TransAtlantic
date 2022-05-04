@@ -1,7 +1,7 @@
 import { WarehouseDto } from "../warehouse.dto";
 import { RetailerWarehouseDto } from "../retailer-warehouse.dto";
-import { UserDto } from "../user.dto";
 import { ApplicationStatusDto } from "./application-status.dto";
+import {UserDto} from "../../response/user.dto";
 
 export class ApplicationDto {
 	id: number;

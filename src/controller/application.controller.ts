@@ -3,10 +3,6 @@ import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { ApplicationService } from "../service/application.service";
 import { ApplicationConverter } from "../converter/application/application.converter";
 import { ApplicationDto } from "../domain/dto/application/application.dto";
-import { AppUser } from "../domain/model/user/app.user";
-import { CreateUserRequest } from "../domain/request/user/create-user.request";
-import { UserDto } from "../domain/dto/user.dto";
-import { CreateApplicationRequest } from "../domain/request/application/create-application.request";
 
 @Controller("application")
 @ApiTags("application-controller")
