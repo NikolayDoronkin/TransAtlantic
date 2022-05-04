@@ -20,6 +20,9 @@ export class Item {
 	@JoinColumn({ name: "category_id" })
 	category: ItemCategory;
 
+	@Column({ name: "category_id" })
+	categoryId: number;
+
 	@Column({ name: "unit_size" })
 	unitSize: number;
 
