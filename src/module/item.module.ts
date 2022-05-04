@@ -13,15 +13,36 @@ import { CarService } from "../service/car.service";
 import { CustomerService } from "../service/customer.service";
 import { WarehouseService } from "../service/warehouse.service";
 import { ItemCategoryService } from "../service/item/item-category.service";
+import { RolePermission } from "../domain/model/user/role.permission";
+import { RoleService } from "../service/role.service";
+import { CustomerStatusService } from "../service/customer.status.service";
+import { CustomerStatus } from "../domain/model/customer/customer.status";
+import { AppUserService } from "../service/app.user.service";
+import { AppUser } from "../domain/model/user/app.user";
+import { UserStatusService } from "../service/user.status.service";
+import { UserStatus } from "../domain/model/user/user.status";
+import { MailService } from "../service/mail.service";
+import { UserRole } from "../domain/model/user/user.role";
 
 @Module({
 	imports: [
-		TypeOrmModule.forFeature([Item, ItemCategory, Customer, Car, Warehouse])
+		TypeOrmModule.forFeature([
+			Item, ItemCategory,
+			Customer, CustomerStatus,
+			Car,
+			Warehouse,
+			UserRole, RolePermission, AppUser, UserStatus])
 	],
 	controllers: [ItemController],
-	providers: [ItemService, ItemConverter, CreateItemConverter,
-		CarService, CustomerService, WarehouseService, ItemCategoryService],
-	exports: [CarService]
+	providers: [
+		ItemService, ItemConverter, CreateItemConverter, ItemCategoryService,
+		AppUserService, UserStatusService, RoleService,
+		MailService,
+		CarService,
+		CustomerService, CustomerStatusService,
+		WarehouseService
+	],
+	exports: [CarService, AppUserService, RoleService]
 })
 export class ItemModule {
 }
