@@ -17,20 +17,22 @@ import { UserStatus } from "../domain/model/user/user.status";
 import { MailModule } from "./mail.module";
 import { CustomerResponseConverter } from "../converter/customer/customer.response.converter";
 import { RolePermission } from "../domain/model/user/role.permission";
+import {Address} from "../domain/model/address/address";
+import {AddressService} from "../service/address.service";
 
 @Module({
 	imports: [
 		MailModule,
 		TypeOrmModule.forFeature([
 			Customer, CustomerStatus, CustomerStatus,
-			AppUser, UserRole, UserStatus, RolePermission
+			AppUser, UserRole, UserStatus, RolePermission, Address
 		])
 	],
 	controllers: [CustomerController],
 	providers: [
 		CustomerService, CreateCustomerConverter, CreateCustomerUserConverter, CreateCustomerResponseConverter, CustomerStatusService, CustomerResponseConverter,
 		AppUserService, RoleService,
-		UserStatusService],
+		UserStatusService, AddressService],
 	exports: []
 })
 export class CustomerModule {

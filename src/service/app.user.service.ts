@@ -1,15 +1,28 @@
-import { Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { AppUser } from "src/domain/model/user/app.user";
+import {Injectable} from "@nestjs/common";
+import {InjectRepository} from "@nestjs/typeorm";
+import {AppUser} from "src/domain/model/user/app.user";
 import {EntityNotFoundError, In, Repository} from "typeorm";
 import * as BCrypt from "bcrypt";
+import {UserStatusService} from "./user.status.service";
+import {RoleService} from "./role.service";
+import {MailService} from "./mail.service";
+import {AddressService} from "./address.service";
 
 @Injectable()
 export class AppUserService {
+
+	private readonly ACTIVE_STATUS = "active";
+	private readonly DISABLED_STATUS = "disabled";
+	private readonly PASSWORD_MAIL_SUBJECT = "Ваш пароль для входа";
+
 	constructor(
 		@InjectRepository(AppUser)
-		private readonly appUserRepository: Repository<AppUser>
-	) {
+		private readonly appUserRepository: Repository<AppUser>,
+		private readonly userStatusService: UserStatusService,
+		private readonly roleService: RoleService,
+		private readonly mailService: MailService,
+		private readonly addressService: AddressService
+		) {
 	}
 
 	async getAll() {
@@ -79,5 +92,54 @@ export class AppUserService {
 		target.statusId = source.statusId;
 
 		return target;
+	}
+
+	async disableUsers(customerIds: number[]) {
+		await this.changeStatus(customerIds, this.DISABLED_STATUS);
+	}
+
+	async enableUsers(customerIds: number[]) {
+		await this.changeStatus(customerIds, this.ACTIVE_STATUS);
+	}
+
+	private async changeStatus(userIds: number[], status: string) {
+		const users = await this.appUserRepository.findByIds(userIds);
+		//todo: проверка на: роль текущего пользователя - admin, у этого админа сustomer_id==users.customerId
+		const userStatus = await this.userStatusService.findByName(status);
+		users.forEach(user => user.status = userStatus);
+		await this.updateAll(users);
+	}
+
+	async createUserManagement(user: AppUser): Promise<AppUser> {
+
+		//todo: user.customer = customer;
+		//todo: user.customerId = customer.id;
+		this.addressService.create(user.address).then(
+			address => user.address = address
+		);
+		this.roleService.findById(user.roleId).then(
+			role => user.role = role
+		);
+		return await this.buildAnsSaveUser(user);
+	}
+
+	async buildAnsSaveUser(user: AppUser) {
+		const userStatus = await this.userStatusService.findByName(this.ACTIVE_STATUS);
+		user.status = userStatus;
+		user.statusId = userStatus.id;
+		user.password = this.generatePassword();
+		const appUser = await this.create(user);
+
+		await this.mailService.sendEmail(user.email, this.PASSWORD_MAIL_SUBJECT, this.buildMessage(user.password));
+		return appUser;
+	}
+
+	private buildMessage(password: string): string {
+		return "Ваш пароль для входа в систему: " + password + "\nНикому не сообщайте";
+	}
+
+	private generatePassword(): string {
+		const crypto = require("crypto");
+		return crypto.randomBytes(4).toString("hex");
 	}
 }

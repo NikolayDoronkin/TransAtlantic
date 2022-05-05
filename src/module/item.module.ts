@@ -23,6 +23,8 @@ import { UserStatusService } from "../service/user.status.service";
 import { UserStatus } from "../domain/model/user/user.status";
 import { MailService } from "../service/mail.service";
 import { UserRole } from "../domain/model/user/user.role";
+import {AddressService} from "../service/address.service";
+import {Address} from "../domain/model/address/address";
 
 @Module({
 	imports: [
@@ -31,7 +33,7 @@ import { UserRole } from "../domain/model/user/user.role";
 			Customer, CustomerStatus,
 			Car,
 			Warehouse,
-			UserRole, RolePermission, AppUser, UserStatus])
+			UserRole, RolePermission, AppUser, UserStatus, Address])
 	],
 	controllers: [ItemController],
 	providers: [
@@ -40,7 +42,7 @@ import { UserRole } from "../domain/model/user/user.role";
 		MailService,
 		CarService,
 		CustomerService, CustomerStatusService,
-		WarehouseService
+		WarehouseService, AddressService
 	],
 	exports: [CarService, AppUserService, RoleService]
 })
