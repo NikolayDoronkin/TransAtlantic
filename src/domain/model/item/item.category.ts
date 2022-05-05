@@ -15,4 +15,6 @@ export class ItemCategory {
 	@ManyToOne(() => Customer, customer => customer.categories)
 	@JoinColumn({ name: "customer_id" })
 	customer: Customer;
+
+	amount: number;
 }

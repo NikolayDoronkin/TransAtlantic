@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { forwardRef, Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Item } from "../domain/model/item/item";
 import { ItemCategory } from "../domain/model/item/item.category";
@@ -23,6 +23,7 @@ import { UserStatusService } from "../service/user.status.service";
 import { UserStatus } from "../domain/model/user/user.status";
 import { MailService } from "../service/mail.service";
 import { UserRole } from "../domain/model/user/user.role";
+import { ItemCategoryConverter } from "../converter/item/item-category.converter";
 
 @Module({
 	imports: [
@@ -35,14 +36,14 @@ import { UserRole } from "../domain/model/user/user.role";
 	],
 	controllers: [ItemController],
 	providers: [
-		ItemService, ItemConverter, CreateItemConverter, ItemCategoryService,
+		ItemService, ItemConverter, CreateItemConverter, ItemCategoryService, ItemCategoryConverter,
 		AppUserService, UserStatusService, RoleService,
 		MailService,
 		CarService,
 		CustomerService, CustomerStatusService,
 		WarehouseService
 	],
-	exports: [CarService, AppUserService, RoleService]
+	exports: [CarService, AppUserService, RoleService, ItemService]
 })
 export class ItemModule {
 }

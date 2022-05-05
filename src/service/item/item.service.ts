@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { forwardRef, Inject, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { In, Repository } from "typeorm";
 import { Item } from "../../domain/model/item/item";
@@ -13,11 +13,22 @@ export class ItemService {
 	constructor(
 		@InjectRepository(Item)
 		private readonly itemRepository: Repository<Item>,
+
 		private readonly carService: CarService,
 		private readonly customerService: CustomerService,
 		private readonly warehouseService: WarehouseService,
+
+		@Inject(forwardRef(() => ItemCategoryService))
 		private readonly itemCategoryService: ItemCategoryService
 	) {
+	}
+
+	async getCountByCategoryId(categoryId: number): Promise<number> {
+		return await this.itemRepository.count({
+			where: {
+				categoryId: categoryId
+			}
+		});
 	}
 
 	async getByCustomerId(customerId: number): Promise<Item[]> {
