@@ -16,6 +16,12 @@ import { CustomerStatus } from "../domain/model/customer/customer.status";
 import { Customer } from "../domain/model/customer/customer";
 import { RolePermission } from "../domain/model/user/role.permission";
 import { UserPermission } from "../domain/model/user/user.permission";
+import {UserManagementController} from "../controller/user-management.controller";
+import {UserManagementResponseConverter} from "../converter/user-management/user-management.response.converter";
+import {UserStatusService} from "../service/user.status.service";
+import {AddressService} from "../service/address.service";
+import {RoleService} from "../service/role.service";
+import {MailService} from "../service/mail.service";
 
 @Module({
 	imports: [
@@ -23,8 +29,9 @@ import { UserPermission } from "../domain/model/user/user.permission";
 			Address, AddressCity, AddressState,
 			Customer, CustomerStatus]),
 		forwardRef(() => LoginModule)],
-	controllers: [AppUserController],
-	providers: [AppUserService, UserConverter, CreateUserConverter, UpdateUserConverter],
+	controllers: [AppUserController, UserManagementController],
+	providers: [AppUserService, UserConverter, CreateUserConverter, UpdateUserConverter,
+				UserManagementResponseConverter, UserStatusService, AddressService, RoleService, MailService],
 	exports: [AppUserService]
 })
 export class AppUserModule {

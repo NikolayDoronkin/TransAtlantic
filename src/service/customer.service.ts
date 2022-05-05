@@ -7,8 +7,6 @@ import { RoleService } from "./role.service";
 import { CustomerStatusService } from "./customer.status.service";
 import { AppUserService } from "./app.user.service";
 import { UserStatusService } from "./user.status.service";
-import { MailService } from "./mail.service";
-import crypto from "crypto";
 
 @Injectable()
 export class CustomerService {
@@ -16,7 +14,6 @@ export class CustomerService {
 	private readonly ADMIN_ROLE = "admin";
 	private readonly ACTIVE_STATUS = "active";
 	private readonly DISABLED_STATUS = "disabled";
-	private readonly PASSWORD_MAIL_SUBJECT = "Ваш пароль для входа";
 
 	constructor(
 		@InjectRepository(Customer)
@@ -24,8 +21,7 @@ export class CustomerService {
 		private readonly roleService: RoleService,
 		private readonly customerStatusService: CustomerStatusService,
 		private readonly userService: AppUserService,
-		private readonly userStatusService: UserStatusService,
-		private readonly mailService: MailService
+		private readonly userStatusService: UserStatusService
 	) {
 	}
 
@@ -52,15 +48,8 @@ export class CustomerService {
 		const role = await this.roleService.findByName(this.ADMIN_ROLE);
 		user.role = role;
 		user.roleId = role.id;
-		const userStatus = await this.userStatusService.findByName(this.ACTIVE_STATUS);
-		user.status = userStatus;
-		user.statusId = userStatus.id;
-		user.password = this.generatePassword();
-		const appUser = await this.userService.create(user);
 
-		await this.mailService.sendEmail(user.email, this.PASSWORD_MAIL_SUBJECT, this.buildMessage(user.password));
-
-		return appUser;
+		return this.userService.buildAnsSaveUser(user);
 	}
 
 	async disableCustomers(customerIds: number[]) {
@@ -81,13 +70,5 @@ export class CustomerService {
 		const userStatus = await this.userStatusService.findByName(status);
 		users.forEach(user => user.status = userStatus);
 		await this.userService.updateAll(users);
-	}
-
-	private buildMessage(password: string): string {
-		return "Ваш пароль для входа в систему: " + password + "\nНикому не сообщайте";
-	}
-
-	private generatePassword(): string {
-		return crypto.randomBytes(4).toString("hex");
 	}
 }
