@@ -16,16 +16,18 @@ import { CustomerStatus } from "../domain/model/customer/customer.status";
 import { Customer } from "../domain/model/customer/customer";
 import { RolePermission } from "../domain/model/user/role.permission";
 import { UserPermission } from "../domain/model/user/user.permission";
+import { InitialDataGeneratorService } from "../service/initial-data-generator.service";
 
 @Module({
 	imports: [
-		TypeOrmModule.forFeature([AppUser, UserRole, UserStatus, RolePermission, UserPermission,
+		TypeOrmModule.forFeature([
+			AppUser, UserRole, UserStatus, RolePermission, UserPermission,
 			Address, AddressCity, AddressState,
 			Customer, CustomerStatus]),
 		forwardRef(() => LoginModule)],
 	controllers: [AppUserController],
-	providers: [AppUserService, UserConverter, CreateUserConverter, UpdateUserConverter],
-	exports: [AppUserService]
+	providers: [AppUserService, UserConverter, CreateUserConverter, UpdateUserConverter, InitialDataGeneratorService],
+	exports: [AppUserService, InitialDataGeneratorService]
 })
 export class AppUserModule {
 }

@@ -24,7 +24,6 @@ import { ApplicationModule } from "./application.module";
 		WarehouseModule,
 		WaybillModule,
 		WriteOffModule,
-		LoginModule,
 		ConfigModule.forRoot({ isGlobal: true }),
 
 		TypeOrmModule.forRoot({

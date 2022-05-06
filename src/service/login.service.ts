@@ -22,9 +22,9 @@ export class LoginService {
 
 	private async validateUser(email: string, password: string) {
 		const user = await this.appUserService.getByEmail(email);
-		const isEqual = await BCrypt.compare(password, user.password);
+		const isEqual = BCrypt.compare(password, user.password);
 
-		if (isEqual) {
+		if (isEqual && user.status.statusName != 'disabled') {
 			return user;
 		}
 
@@ -32,10 +32,10 @@ export class LoginService {
 	}
 
 	private async generateToken(user: AppUser) {
-		const payload = { id: user.id, login: user.email, password: user.password };
+		const payload = { id: user.id, email: user.email, password: user.password };
 
 		return {
-			token: this.jwtService.sign(payload)
+			access_token: this.jwtService.sign(payload)
 		};
 	}
 }

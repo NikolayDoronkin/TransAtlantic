@@ -1,8 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { AppUser } from "src/domain/model/user/app.user";
-import {EntityNotFoundError, In, Repository} from "typeorm";
+import { EntityNotFoundError, In, Repository } from "typeorm";
 import * as BCrypt from "bcrypt";
+import { RuntimeException } from "@nestjs/core/errors/exceptions/runtime.exception";
+import { RolePermissionType } from "../domain/model/user/type/role-permission.type";
 
 @Injectable()
 export class AppUserService {
@@ -21,14 +23,20 @@ export class AppUserService {
 		return await this.appUserRepository.findOne(
 			{
 				where: { id },
-				relations: ["role", "customer", "status", "address"]
+				relations: [
+					"role",
+					"role.rolePermissions",
+					"role.rolePermissions.permission",
+					"customer",
+					"status",
+					"address"]
 			});
 	}
 
 	async getByCustomerIds(customerIds: number[]): Promise<AppUser[]> {
 		return await this.appUserRepository.find(
 			{
-				where : {customerId: In(customerIds)},
+				where: { customerId: In(customerIds) },
 				relations: ["role", "customer", "status", "address"]
 			});
 	}
@@ -68,6 +76,21 @@ export class AppUserService {
 
 	async getByEmail(email: string) {
 		return await this.appUserRepository.findOne({ where: { email } });
+	}
+
+	async checkPermission(userId: number, permission: RolePermissionType): Promise<void> {
+		return await this.getById(userId)
+			.then(user => {
+				const isValid = user.role.rolePermissions
+					.some((rolePermission) => rolePermission.permission.name == RolePermissionType[permission]);
+
+				if (!isValid) {
+					throw new RuntimeException("Нет разрешения для выполнения данной функции.");
+				}
+			})
+			.catch(() => {
+				throw new EntityNotFoundError(AppUser, userId);
+			});
 	}
 
 	private buildUser(source: AppUser, target: AppUser): AppUser {

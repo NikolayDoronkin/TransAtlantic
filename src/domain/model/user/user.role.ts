@@ -4,6 +4,10 @@ import { RolePermission } from "./role.permission";
 
 @Entity("user_role")
 export class UserRole {
+	constructor(roleName?: string) {
+		this.roleName = roleName;
+	}
+
 	@PrimaryGeneratedColumn()
 	id: number;
 
