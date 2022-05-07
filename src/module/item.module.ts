@@ -1,4 +1,4 @@
-import { forwardRef, Module } from "@nestjs/common";
+import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Item } from "../domain/model/item/item";
 import { ItemCategory } from "../domain/model/item/item.category";
@@ -24,6 +24,13 @@ import { UserStatus } from "../domain/model/user/user.status";
 import { MailService } from "../service/mail.service";
 import { UserRole } from "../domain/model/user/user.role";
 import { ItemCategoryConverter } from "../converter/item/item-category.converter";
+import { WarehouseConverter } from "../converter/warehouse/warehouse.converter";
+import { WarehouseItemService } from "../service/warehouse.item.service";
+import { WarehouseItem } from "../domain/model/warehouse/warehouse.item";
+import { Address } from "../domain/model/address/address";
+import { CreateWarehouseConverter } from "../converter/warehouse/create.warehouse.converter";
+import { CreateAddressConverter } from "../converter/create.address.converter";
+import { Application } from "../domain/model/application/application";
 
 @Module({
 	imports: [
@@ -32,7 +39,7 @@ import { ItemCategoryConverter } from "../converter/item/item-category.converter
 			Customer, CustomerStatus,
 			Car,
 			Warehouse,
-			UserRole, RolePermission, AppUser, UserStatus])
+			UserRole, RolePermission, AppUser, UserStatus, WarehouseItem, Address, Application])
 	],
 	controllers: [ItemController],
 	providers: [
@@ -41,7 +48,11 @@ import { ItemCategoryConverter } from "../converter/item/item-category.converter
 		MailService,
 		CarService,
 		CustomerService, CustomerStatusService,
-		WarehouseService
+		WarehouseService,
+		WarehouseConverter,
+		WarehouseItemService,
+		CreateWarehouseConverter,
+		CreateAddressConverter
 	],
 	exports: [CarService, AppUserService, RoleService, ItemService]
 })

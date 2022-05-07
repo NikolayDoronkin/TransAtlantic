@@ -16,6 +16,9 @@ export class Warehouse {
 	@JoinColumn({ name: "address_id" })
 	address: Address;
 
+	@Column({ name: "address_id" })
+	addressId: number;
+
 	@Column({ name: "total_capacity" })
 	totalCapacity: number;
 

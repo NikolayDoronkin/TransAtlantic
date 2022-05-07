@@ -1,7 +1,9 @@
 import { AbstractConverter } from "./abstract.converter";
 import { RetailerWarehouse } from "../domain/model/retailer/retailer.warehouse";
-import {RetailerWarehouseResponse} from "../domain/response/retailer-warehouse.response";
+import { RetailerWarehouseResponse } from "../domain/response/retailer-warehouse.response";
+import { Injectable } from "@nestjs/common";
 
+@Injectable()
 export class RetailerWarehouseConverter extends AbstractConverter<RetailerWarehouse, RetailerWarehouseResponse> {
 	convert(source: RetailerWarehouse): RetailerWarehouseResponse {
 		const target = new RetailerWarehouseResponse();
@@ -13,5 +15,4 @@ export class RetailerWarehouseConverter extends AbstractConverter<RetailerWareho
 
 		return target;
 	}
-
 }

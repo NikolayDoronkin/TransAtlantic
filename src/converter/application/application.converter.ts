@@ -3,8 +3,8 @@ import { Application } from "../../domain/model/application/application";
 import { ApplicationDto } from "../../domain/response/application/application.dto";
 import { Injectable } from "@nestjs/common";
 import { UserConverter } from "../user/user.converter";
-import { WarehouseConverter } from "../warehouse.converter";
 import { RetailerWarehouseConverter } from "../retailer-warehouse.converter";
+import { WarehouseConverter } from "../warehouse/warehouse.converter";
 
 @Injectable()
 export class ApplicationConverter extends AbstractConverter<Application, ApplicationDto> {
@@ -33,4 +33,3 @@ export class ApplicationConverter extends AbstractConverter<Application, Applica
 	}
 
 }
-
