@@ -29,7 +29,7 @@ export class InitialDataGeneratorService implements OnModuleInit {
 	async onModuleInit() {
 		this.loadPermissions();
 		this.loadRoles();
-		await this.loadRolesPermissions();
+		this.loadRolesPermissions();
 		this.loadUserStatus();
 	}
 

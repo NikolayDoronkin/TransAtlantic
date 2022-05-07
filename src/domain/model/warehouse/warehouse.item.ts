@@ -15,6 +15,9 @@ export class WarehouseItem {
 	@JoinColumn({ name: "item_id" })
 	item: Item;
 
+	@Column({ name: "item_id" })
+	itemId: number;
+
 	@Column({ name: "amount" })
 	amount: number;
 }
