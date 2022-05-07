@@ -1,5 +1,3 @@
-import { ApplicationStatusDto } from "../../response/application/application-status.dto";
-
 export class CreateApplicationRequest {
 	number: number;
 
@@ -13,5 +11,5 @@ export class CreateApplicationRequest {
 
 	lastEditTime: Date;
 
-	status: ApplicationStatusDto;
+	statusId: number;
 }

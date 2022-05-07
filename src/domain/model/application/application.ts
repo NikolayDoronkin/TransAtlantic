@@ -25,23 +25,29 @@ export class Application {
 	@JoinColumn({ name: "dest_warehouse_id" })
 	destWarehouse: RetailerWarehouse;
 
+	@Column({name: "dest_warehouse_id" })
+	destWarehouseId: number;
+
 	@ManyToOne(() => AppUser)
 	@JoinColumn({ name: "creator_id" })
 	creator: AppUser;
 
 	@Column({ type: "date", name: "create_time" })
-	createTime: string;
+	createTime: Date;
 
 	@ManyToOne(() => AppUser)
 	@JoinColumn({ name: "last_editor_id" })
 	lastEditor: AppUser;
 
 	@Column({ type: "date", name: "last_edit_time" })
-	lastEditTime: string;
+	lastEditTime: Date;
 
 	@ManyToOne(() => ApplicationStatus, status => status.applications)
 	@JoinColumn({ name: "status_id" })
 	status: ApplicationStatus;
+
+	@Column({name: "status_id" })
+	statusId: number;
 
 	@ManyToOne(() => Waybill, waybill => waybill.applications)
 	@JoinColumn({ name: "waybill_id" })

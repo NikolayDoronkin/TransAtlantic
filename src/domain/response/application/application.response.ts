@@ -3,7 +3,7 @@ import { RetailerWarehouseResponse } from "../retailer-warehouse.response";
 import { ApplicationStatusDto } from "./application-status.dto";
 import {UserResponse} from "../user.response";
 
-export class ApplicationDto {
+export class ApplicationResponse {
 	id: number;
 
 	number: number;
@@ -12,11 +12,11 @@ export class ApplicationDto {
 
 	destWarehouse: RetailerWarehouseResponse;
 
-	createTime: string;
+	createTime: Date;
 
 	lastEditor: UserResponse;
 
-	lastEditTime: string;
+	lastEditTime: Date;
 
 	status: ApplicationStatusDto;
 }

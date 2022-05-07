@@ -32,4 +32,9 @@ export class ApplicationService {
 				"lastEditor"]
 		});
 	}
+
+	async create(application: Application) {
+
+		await this.applicationRepository.save(application);
+	}
 }

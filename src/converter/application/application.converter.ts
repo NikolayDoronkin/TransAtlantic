@@ -1,13 +1,13 @@
 import { AbstractConverter } from "../abstract.converter";
 import { Application } from "../../domain/model/application/application";
-import { ApplicationDto } from "../../domain/response/application/application.dto";
+import { ApplicationResponse } from "../../domain/response/application/application.response";
 import { Injectable } from "@nestjs/common";
 import { UserConverter } from "../user/user.converter";
 import { WarehouseConverter } from "../warehouse.converter";
 import { RetailerWarehouseConverter } from "../retailer-warehouse.converter";
 
 @Injectable()
-export class ApplicationConverter extends AbstractConverter<Application, ApplicationDto> {
+export class ApplicationConverter extends AbstractConverter<Application, ApplicationResponse> {
 	constructor(
 		private readonly userConverter: UserConverter,
 		private readonly warehouseConverter: WarehouseConverter,
@@ -16,8 +16,8 @@ export class ApplicationConverter extends AbstractConverter<Application, Applica
 		super();
 	}
 
-	convert(source: Application): ApplicationDto {
-		const target = new ApplicationDto();
+	convert(source: Application): ApplicationResponse {
+		const target = new ApplicationResponse();
 
 		target.id = source.id;
 		target.number = source.number;
