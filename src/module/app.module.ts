@@ -12,9 +12,11 @@ import { RetailerModule } from "./retailer.module";
 import { WaybillModule } from "./waybill.module";
 import { WriteOffModule } from "./write.off.module";
 import { ApplicationModule } from "./application.module";
+import { AddressModule } from "./address.module";
 
 @Module({
 	imports: [
+		AddressModule,
 		AppUserModule,
 		ApplicationModule,
 		LoginModule,
