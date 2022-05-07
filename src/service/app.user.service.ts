@@ -91,6 +91,9 @@ export class AppUserService {
 	async checkPermission(userId: number, permission: RolePermissionType): Promise<void> {
 		return this.getById(userId)
 			.then(user => {
+				if (user ==  undefined) {
+					throw new EntityNotFoundError(AppUser, userId);
+				}
 				const isValid = user.role.rolePermissions
 					.some((rolePermission) => rolePermission.permission.name == RolePermissionType[permission]);
 
@@ -98,9 +101,6 @@ export class AppUserService {
 					return Promise.reject(new RuntimeException("Нет разрешения для выполнения данной функции."));
 				}
 			})
-			.catch(() => {
-				throw new EntityNotFoundError(AppUser, userId);
-			});
 	}
 
 	private buildUser(source: AppUser, target: AppUser): AppUser {

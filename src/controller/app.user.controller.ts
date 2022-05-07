@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Request, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from "@nestjs/common";
 import { AppUser } from "src/domain/model/user/app.user";
 import { CreateUserRequest } from "../domain/request/user/create-user.request";
 import { AppUserService } from "../service/app.user.service";
@@ -10,6 +10,7 @@ import { UserConverter } from "../converter/user/user.converter";
 import { UserResponse } from "../domain/response/user.response";
 import { UpdateUserRequest } from "../domain/request/user/update-user.request";
 import { RolePermissionType } from "../domain/model/user/type/role-permission.type";
+import { SecurityUtils } from "../configuration/security.utils";
 
 @Controller("user")
 @ApiTags("app-user-controller")
@@ -27,8 +28,8 @@ export class AppUserController {
 	@UseGuards(JwtAuthGuard)
 	@ApiResponse({ status: 200, type: [AppUser] })
 	@ApiOperation({ summary: "Получения всех пользователей." })
-	async getAll(@Request() request) {
-		await this.userService.checkPermission(request.user.id, RolePermissionType.ALL_APPLICATIONS_READ);
+	async getAll() {
+		await this.userService.checkPermission(SecurityUtils.getCurrentUserId(), RolePermissionType.ALL_APPLICATIONS_READ);
 
 		return this.userService.getAll();
 	}
