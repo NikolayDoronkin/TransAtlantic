@@ -6,23 +6,31 @@ import { RolePermissionType } from "../domain/model/user/type/role-permission.ty
 import { SystemUserRoleType } from "../domain/model/user/type/system-user-role.type";
 import { UserRole } from "../domain/model/user/user.role";
 import { RolePermission } from "../domain/model/user/role.permission";
+import { UserStatus } from "../domain/model/user/user.status";
+import { UserStatusType } from "../domain/model/user/type/user-status.type";
 
 @Injectable()
 export class InitialDataGeneratorService implements OnModuleInit {
 	constructor(
 		@InjectRepository(UserPermission)
 		private readonly userPermissionRepository: Repository<UserPermission>,
+
 		@InjectRepository(UserRole)
 		private readonly userRoleRepository: Repository<UserRole>,
+
 		@InjectRepository(RolePermission)
-		private readonly rolePermissionRepository: Repository<RolePermission>
+		private readonly rolePermissionRepository: Repository<RolePermission>,
+
+		@InjectRepository(UserStatus)
+		private readonly UserStatusRepository: Repository<UserStatus>
 	) {
 	}
 
-	onModuleInit() {
+	async onModuleInit() {
 		this.loadPermissions();
 		this.loadRoles();
-		this.loadRolesPermissions();
+		await this.loadRolesPermissions();
+		this.loadUserStatus();
 	}
 
 	loadPermissions(): void {
@@ -83,5 +91,18 @@ export class InitialDataGeneratorService implements OnModuleInit {
 				}
 			}
 		}
+	}
+
+	private loadUserStatus() {
+		Object.keys(UserStatusType)
+			.filter(item => isNaN(Number(item)))
+			.forEach(status => {
+				this.UserStatusRepository.findOne({ where: { statusName: status } })
+					.then(userStatus => {
+						if (userStatus == undefined) {
+							this.UserStatusRepository.save(new UserStatus(status));
+						}
+					})
+			})
 	}
 }

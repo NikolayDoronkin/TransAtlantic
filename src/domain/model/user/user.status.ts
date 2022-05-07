@@ -3,6 +3,10 @@ import { AppUser } from "./app.user";
 
 @Entity("user_status")
 export class UserStatus {
+	constructor(statusName?: string) {
+		this.statusName = statusName;
+	}
+
 	@PrimaryGeneratedColumn()
 	id: number;
 

@@ -4,6 +4,7 @@ import { JwtService } from "@nestjs/jwt";
 import { AppStatusCode } from "../domain/enum/app-status-code";
 import * as BCrypt from "bcrypt";
 import { AppUser } from "../domain/model/user/app.user";
+import { UserStatusType } from "../domain/model/user/type/user-status.type";
 
 @Injectable()
 export class LoginService {
@@ -22,13 +23,17 @@ export class LoginService {
 
 	private async validateUser(email: string, password: string) {
 		const user = await this.appUserService.getByEmail(email);
-		const isEqual = BCrypt.compare(password, user.password);
+		const isEqual = await BCrypt.compare(password, user.password);
 
-		if (isEqual && user.status.statusName != 'disabled') {
-			return user;
+		if(!isEqual) {
+			throw new UnauthorizedException(AppStatusCode.USER_DOES_NOT_EXIST);
 		}
 
-		throw new UnauthorizedException(AppStatusCode.USER_DOES_NOT_EXIST);
+		if(user.status.statusName == UserStatusType[UserStatusType.DISABLE]) {
+			throw new UnauthorizedException(AppStatusCode.USER_DISABLE);
+		}
+
+		return user;
 	}
 
 	private async generateToken(user: AppUser) {

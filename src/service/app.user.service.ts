@@ -22,7 +22,9 @@ export class AppUserService {
 	async getById(id: number): Promise<AppUser> {
 		return await this.appUserRepository.findOne(
 			{
-				where: { id },
+				where: {
+					id: id
+				},
 				relations: [
 					"role",
 					"role.rolePermissions",
@@ -44,10 +46,11 @@ export class AppUserService {
 	async create(user: AppUser): Promise<AppUser> {
 		const createdUser = this.buildUser(user, new AppUser());
 
-		createdUser.password = await BCrypt.hash(user.password, 5);
+		createdUser.email = user.email;
 		createdUser.roleId = user.roleId;
+		createdUser.password = await BCrypt.hash(user.password, await BCrypt.genSalt());
 
-		return this.appUserRepository.save(user);
+		return this.appUserRepository.save(createdUser);
 	}
 
 	async update(updatedUser: AppUser): Promise<AppUser> {
@@ -75,17 +78,24 @@ export class AppUserService {
 	}
 
 	async getByEmail(email: string) {
-		return await this.appUserRepository.findOne({ where: { email } });
+		return await this.appUserRepository.findOne({
+			where: {
+				email
+			},
+			relations: [
+				"status"
+			]
+		});
 	}
 
 	async checkPermission(userId: number, permission: RolePermissionType): Promise<void> {
-		return await this.getById(userId)
+		return this.getById(userId)
 			.then(user => {
 				const isValid = user.role.rolePermissions
 					.some((rolePermission) => rolePermission.permission.name == RolePermissionType[permission]);
 
 				if (!isValid) {
-					throw new RuntimeException("Нет разрешения для выполнения данной функции.");
+					return Promise.reject(new RuntimeException("Нет разрешения для выполнения данной функции."));
 				}
 			})
 			.catch(() => {

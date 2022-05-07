@@ -28,7 +28,7 @@ export class AppUserController {
 	@ApiResponse({ status: 200, type: [AppUser] })
 	@ApiOperation({ summary: "Получения всех пользователей." })
 	async getAll(@Request() request) {
-		this.userService.checkPermission(request.user.id, RolePermissionType.ALL_APPLICATIONS_READ);
+		await this.userService.checkPermission(request.user.id, RolePermissionType.ALL_APPLICATIONS_READ);
 
 		return this.userService.getAll();
 	}
