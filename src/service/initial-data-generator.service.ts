@@ -79,7 +79,7 @@ export class InitialDataGeneratorService implements OnModuleInit {
 				});
 				rolePermission.permission = permission;
 
-				const existedRolePermission = this.rolePermissionRepository.findOne({
+				const existedRolePermission = await this.rolePermissionRepository.findOne({
 					where: {
 						role: rolePermission.role,
 						permission: rolePermission.permission
