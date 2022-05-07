@@ -8,6 +8,7 @@
 
     <include file="resources/liquibase/init.sql"/>
     <include file="resources/liquibase/ta-7.sql"/>
+    <include file="resources/liquibase/ta-22.sql"/>
     <include file="resources/liquibase/ta-70.sql"/>
 
 </databaseChangeLog>

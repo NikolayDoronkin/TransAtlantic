@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
-import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
-import { WarehouseItem } from "../domain/model/warehouse/warehouse.item";
-import { Item } from "../domain/model/item/item";
+import { Repository } from "typeorm";
+import {WarehouseItem} from "../domain/model/warehouse/warehouse.item";
+import {Item} from "../domain/model/item/item";
 
 @Injectable()
 export class WarehouseItemService {
@@ -10,6 +10,15 @@ export class WarehouseItemService {
 		@InjectRepository(WarehouseItem)
 		private readonly warehouseItemRepository: Repository<WarehouseItem>
 	) {
+	}
+
+	async getByItemId(itemId: number): Promise<WarehouseItem> {
+		return await this.warehouseItemRepository
+			.findOne({ where: { itemId: itemId } });
+	}
+
+	async save(item: WarehouseItem): Promise<WarehouseItem> {
+		return this.warehouseItemRepository.save(item);
 	}
 
 	countOccupiedUnits(warehouseId: number): Promise<number> {

@@ -8,12 +8,19 @@ export class WriteOffAct {
 	id: number;
 
 	@Column({ type: "date", name: "act_date" })
-	actDate: string;
+	actDate: Date;
 
 	@ManyToOne(() => AppUser)
 	@JoinColumn({ name: "reporter_id" })
 	reporter: AppUser;
 
+	@Column({ name: "reporter_id" })
+	reporterId: number;
+
 	@OneToMany(() => WriteOffItem, item => item.act)
 	items: WriteOffItem[];
+
+	itemsCount: number;
+
+	itemsTotalSum: number;
 }

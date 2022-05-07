@@ -48,6 +48,19 @@ export class ItemService {
 		});
 	}
 
+	async getPriceByItemId(itemId: number): Promise<number> {
+		const item = await this.itemRepository.findOne(
+			{where: {id: itemId}}
+		);
+		return item.price;
+	}
+
+	async getItemByUpc (upc: bigint): Promise<Item> {
+		return await this.itemRepository.findOne(
+			{where: {upc: upc}}
+		)
+	}
+
 	async create(item: Item): Promise<Item> {
 		return await this.itemRepository.save(await this.buildItem(item, new Item()));
 	}
