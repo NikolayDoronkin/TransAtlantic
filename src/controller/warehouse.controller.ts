@@ -1,12 +1,14 @@
-import { Body, Controller, Delete, Get, Param, Post, Query } from "@nestjs/common";
-import { ApiOkResponse, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { Body, Controller, Delete, Get, Param, Post, Query, UseGuards } from "@nestjs/common";
+import { ApiBearerAuth, ApiOkResponse, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { WarehouseService } from "../service/warehouse.service";
 import { WarehouseConverter } from "../converter/warehouse/warehouse.converter";
 import { CreateWarehouseRequest } from "../domain/request/warehouse/create.warehouse.request";
 import { WarehouseResponse } from "../domain/response/warehouse.response";
 import { CreateWarehouseConverter } from "../converter/warehouse/create.warehouse.converter";
+import { JwtAuthGuard } from "../configuration/jwt/jwt-auth-guard";
 
 @Controller()
+@ApiBearerAuth("access-token")
 @ApiTags("warehouse-controller")
 export class WarehouseController {
 	constructor(
@@ -16,6 +18,7 @@ export class WarehouseController {
 	) {
 	}
 
+	@UseGuards(JwtAuthGuard)
 	@Get("/customer/:id/warehouses")
 	@ApiResponse({ status: 200, type: [WarehouseResponse] })
 	@ApiOperation({ summary: "Получение всех складов клиента" })
@@ -23,6 +26,7 @@ export class WarehouseController {
 		return this.warehouseService.getByCustomerId(id);
 	}
 
+	@UseGuards(JwtAuthGuard)
 	@Get("/customer/:customerId/warehouses/:warehouseId")
 	@ApiResponse({ status: 200, type: [WarehouseResponse] })
 	@ApiOperation({ summary: "Получение склада клиента" })
@@ -32,6 +36,7 @@ export class WarehouseController {
 			await this.warehouseService.getByCustomerIdAndWarehouseId(customerId, warehouseId));
 	}
 
+	@UseGuards(JwtAuthGuard)
 	@Post("/customer/:id/warehouses/create")
 	@ApiResponse({ status: 200, type: [WarehouseResponse] })
 	@ApiOperation({ summary: "Создание склада" })
@@ -41,6 +46,7 @@ export class WarehouseController {
 		return this.warehouseConverter.convert(warehouse);
 	}
 
+	@UseGuards(JwtAuthGuard)
 	@Delete("/customer/:id/warehouses/delete")
 	@ApiResponse({ status: 200, type: ApiOkResponse })
 	@ApiTags("For Katya: NW")
