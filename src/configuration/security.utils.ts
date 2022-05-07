@@ -7,6 +7,10 @@ export class SecurityUtils {
 		return this.currentUser.id;
 	}
 
+	static getCurrentUser() {
+		return this.currentUser;
+	}
+
 	static setCurrentUser(user: AppUser) {
 		this.currentUser = user;
 	}
