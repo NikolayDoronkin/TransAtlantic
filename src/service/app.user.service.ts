@@ -91,16 +91,18 @@ export class AppUserService {
 	async checkPermission(userId: number, permission: RolePermissionType): Promise<void> {
 		return this.getById(userId)
 			.then(user => {
-				if (user ==  undefined) {
+				if (user == undefined) {
 					throw new EntityNotFoundError(AppUser, userId);
 				}
-				const isValid = user.role.rolePermissions
-					.some((rolePermission) => rolePermission.permission.name == RolePermissionType[permission]);
-
-				if (!isValid) {
+				if (!this.isValid(user, permission)) {
 					return Promise.reject(new RuntimeException("Нет разрешения для выполнения данной функции."));
 				}
-			})
+			});
+	}
+
+	isValid(user: AppUser, permission: RolePermissionType): boolean {
+		return user.role.rolePermissions
+			.some((rolePermission) => rolePermission.permission.name == RolePermissionType[permission]);
 	}
 
 	private buildUser(source: AppUser, target: AppUser): AppUser {

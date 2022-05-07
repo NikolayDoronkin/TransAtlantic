@@ -6,7 +6,7 @@ import { ValidationPipe } from "./pipe/validation.pipe";
 import { LiquibaseConfiguration } from "./configuration/liquibase.configuration";
 
 async function bootstrap() {
-	const app = await NestFactory.create(AppModule);
+	const app = await NestFactory.create(AppModule, {cors: true});
 	const swaggerConfiguration = SwaggerConfiguration.configure();
 	const document = SwaggerModule.createDocument(app, swaggerConfiguration);
 

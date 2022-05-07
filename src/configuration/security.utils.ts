@@ -1,11 +1,13 @@
+import { AppUser } from "../domain/model/user/app.user";
+
 export class SecurityUtils {
-	private static currentUserId: number;
+	private static currentUser: AppUser;
 
 	static getCurrentUserId() {
-		return this.currentUserId
+		return this.currentUser.id;
 	}
 
-	static setCurrentUserId(id: number) {
-		this.currentUserId = id;
+	static setCurrentUser(user: AppUser) {
+		this.currentUser = user;
 	}
 }
